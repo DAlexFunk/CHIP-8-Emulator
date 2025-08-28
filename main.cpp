@@ -1,9 +1,8 @@
 #include <SDL.h>
 #include <SDL_mixer.h>
 #include <iostream>
-#include "chip8.h"
 
-bool initSDL();
+bool init();
 bool loadSoundEffect(std::string path);
 void close();
 
@@ -15,7 +14,7 @@ const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 640;
 
 int main(int argc, char* argv[]) {
-	if (!initSDL()) {
+	if (!init()) {
 		return 1;
 	}
 
@@ -37,7 +36,7 @@ int main(int argc, char* argv[]) {
 	return 0;
 }
 
-bool initSDL() {
+bool init() {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
 		std::cout << "Could not initilize: " << SDL_GetError() << std::endl;
 		return false;
