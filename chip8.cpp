@@ -1,3 +1,5 @@
+#include <fstream>
+#include <iostream>
 #include "chip8.h"
 
 unsigned char font[80] = {
@@ -75,8 +77,26 @@ void chip8::initChip() {
  * Returns true if loaded successfully, false otherwise
  * Loads the rom data into memory starting at 0x200
  */
-bool chip8::loadFile(std::string file) {
+bool chip8::loadFile(std::string path) {
+    std::ifstream file(path, std::ios::in | std::ios::binary);
 
+    if (!file.is_open()) {
+        std::cout << "Could not open " << path << std::endl;
+        return false;
+    }
+
+    int i{ 512 };
+    unsigned char curr{ 0 };
+    while (file >> curr) {
+        if (i > 4095) {
+            std::cout << path << " is too large\n";
+            return false;
+        }
+
+        mem[i] = curr;
+        i++;
+    }
+    return true;
 }
 
 /*

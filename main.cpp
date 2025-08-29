@@ -28,6 +28,10 @@ int main(int argc, char* argv[]) {
 
 	chip.initChip();
 
+	if (!chip.loadFile("tests/test1.ch8")) {
+		return 1;
+	}
+
 	bool isRunning = true;
 	SDL_Event evt;
 	while (isRunning) {
