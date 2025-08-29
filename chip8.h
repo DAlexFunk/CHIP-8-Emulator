@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 const int RES_W{ 64 }; // How many pixels wide the screen is
 const int RES_H{ 32 }; // How many pixels tall the screen is
@@ -12,6 +13,7 @@ public:
 	bool soundFlag;
 
 	void initChip();
+	bool loadFile(std::string file);
 	void runCycle();
 
 	unsigned char key[16]{ 0 };	   // Stores the current key state
