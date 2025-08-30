@@ -2,6 +2,7 @@
 #include <memory>
 #include "SDL.h"
 #include "SDL_mixer.h"
+#include "constants.h"
 
 // Deleter to cleanup SDL objects
 struct SDLDeleter {
@@ -10,17 +11,21 @@ struct SDLDeleter {
 	void operator()(Mix_Chunk* chunk) const { if (chunk) Mix_FreeChunk(chunk); }
 };
 
+/*
+KEY MAPPING:
+1 2 3 4		 	 1 2 3 C
+Q W E R		 	 4 5 6 D
+A S D F    ->    7 8 9 E
+Z X C V			 A 0 B F
+*/
 class interface {
 public:
 	interface();
 	~interface();
 
-	bool handleKeys(unsigned char keys[16]);
-	void updateScreen(unsigned char screen[32][64]);
+	bool handleKeys(unsigned char keys[constants::NUM_KEYS]);
+	void updateScreen(unsigned char screen[constants::RES_H][constants::RES_W]);
 	void playBeep();
-
-	static const int SCREEN_WIDTH = 1280;
-	static const int SCREEN_HEIGHT = 640;
 
 private:
 	std::unique_ptr<SDL_Window, SDLDeleter> window;

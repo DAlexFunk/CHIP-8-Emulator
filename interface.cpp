@@ -6,7 +6,12 @@ interface::interface() {
 		std::cout << "Could not initilize: " << SDL_GetError() << std::endl;
 	}
 
-	window.reset(SDL_CreateWindow("CHIP-8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN));
+	window.reset(SDL_CreateWindow(
+		"CHIP-8",
+		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+		constants::SCREEN_WIDTH, constants::SCREEN_HEIGHT,
+		SDL_WINDOW_SHOWN));
+
 	if (window == NULL) {
 		std::cout << "Could not make window: " << SDL_GetError() << std::endl;
 	}
@@ -37,7 +42,7 @@ interface::~interface() {
  * Returns false if the quit event was called and true otherwise
  * Updates the given array with the state of the keyboard
  */
-bool interface::handleKeys(unsigned char keys[16]) {
+bool interface::handleKeys(unsigned char keys[constants::NUM_KEYS]) {
 	SDL_Event evt;
 	while (SDL_PollEvent(&evt) > 0) {
 		if (evt.type == SDL_QUIT) {
@@ -46,54 +51,61 @@ bool interface::handleKeys(unsigned char keys[16]) {
 		else if (evt.type == SDL_KEYDOWN || evt.type == SDL_KEYUP) {
 			int state = evt.type == SDL_KEYDOWN ? 1 : 0;
 			
+			/*
+			KEY MAPPING:
+			1 2 3 4			 1 2 3 C
+			Q W E R			 4 5 6 D
+			A S D F    ->    7 8 9 E
+			Z X C V			 A 0 B F
+			*/
 			switch (evt.key.keysym.sym) {
 			case SDLK_1:
-				keys[1] = state;
+				keys[0x1] = state;
 				break;
 			case SDLK_2:
-				keys[2] = state;
+				keys[0x2] = state;
 				break;
 			case SDLK_3:
-				keys[3] = state;
+				keys[0x3] = state;
 				break;
 			case SDLK_4:
-				keys[12] = state;
+				keys[0xC] = state;
 				break;
 			case SDLK_q:
-				keys[4] = state;
+				keys[0x4] = state;
 				break;
 			case SDLK_w:
-				keys[5] = state;
+				keys[0x5] = state;
 				break;
 			case SDLK_e:
-				keys[6] = state;
+				keys[0x6] = state;
 				break;
 			case SDLK_r:
-				keys[13] = state;
+				keys[0xD] = state;
 				break;
 			case SDLK_a:
-				keys[7] = state;
+				keys[0x7] = state;
 				break;
 			case SDLK_s:
-				keys[8] = state;
+				keys[0x8] = state;
 				break;
 			case SDLK_d:
-				keys[9] = state;
+				keys[0x9] = state;
 				break;
 			case SDLK_f:
-				keys[14] = state;
+				keys[0xE] = state;
 				break;
 			case SDLK_z:
-				keys[10] = state;
+				keys[0xA] = state;
 				break;
 			case SDLK_x:
-				keys[0] = state;
+				keys[0x0] = state;
 				break;
 			case SDLK_c:
-				keys[11] = state;
+				keys[0xB] = state;
 				break;
 			case SDLK_v:
-				keys[15] = state;
+				keys[0xF] = state;
 				break;
 			default:
 				break;
@@ -104,7 +116,7 @@ bool interface::handleKeys(unsigned char keys[16]) {
 	return true;
 }
 
-void interface::updateScreen(unsigned char screen[32][64]) {
+void interface::updateScreen(unsigned char screen[constants::RES_H][constants::RES_W]) {
 	// Nothing for now
 }
 
@@ -115,6 +127,5 @@ void interface::updateScreen(unsigned char screen[32][64]) {
  * Plays a beeping sound
  */
 void interface::playBeep() {
-	std::cout << "BEEPING\n";
 	Mix_PlayChannel(-1, beep.get(), 0);
 }

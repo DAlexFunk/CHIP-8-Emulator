@@ -33,20 +33,20 @@ chip8::chip8() {
     soundTimer = 0;
 
     // Reset registers, stack, and keys
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < constants::NUM_KEYS; i++) {
         V[i] = 0;
         stack[i] = 0;
         key[i] = 0;
     }
 
     // Reset memory
-    for (int i = 0; i < 4096; i++) {
+    for (int i = 0; i < constants::MEM_LOCATIONS; i++) {
         mem[i] = 0;
     }
 
     // Reset Screen
-    for (int i = 0; i < RES_H; i++) {
-        for (int j = 0; j < RES_W; j++) {
+    for (int i = 0; i < constants::RES_H; i++) {
+        for (int j = 0; j < constants::RES_W; j++) {
             screen[i][j] = 0;
         }
     }
@@ -77,13 +77,13 @@ bool chip8::loadFile(std::string path) {
 
     file.seekg(0, std::ios::end);
     std::streamsize size{ file.tellg() };
-    if (size > 4096 - 512) {
+    if (size > constants::MEM_LOCATIONS - constants::START_ADR) {
         std::cout << path << " is too large\n";
         return false;
     }
 
     file.seekg(0, std::ios::beg);
-    file.read(reinterpret_cast<char*>(&mem[0x200]), size);
+    file.read(reinterpret_cast<char*>(&mem[constants::START_ADR]), size);
 
     return true;
 }
