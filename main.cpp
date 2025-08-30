@@ -3,10 +3,15 @@
 #include "interface.h"
 
 int main(int argc, char* argv[]) {
+	if (argc < 2) {
+		std::cout << "Must pass in the rom as an argument\n";
+		return 1;
+	}
+	
 	chip8 chip;
 	interface interface;
 
-	if (!chip.loadFile("tests/test1.ch8")) {
+	if (!chip.loadFile(argv[1])) {
 		return 1;
 	}
 
