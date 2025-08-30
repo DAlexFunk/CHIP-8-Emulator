@@ -43,109 +43,57 @@ bool interface::handleKeys(unsigned char keys[16]) {
 		if (evt.type == SDL_QUIT) {
 			return false;
 		}
-		else if (evt.type == SDL_KEYDOWN) {
+		else if (evt.type == SDL_KEYDOWN || evt.type == SDL_KEYUP) {
+			int state = evt.type == SDL_KEYDOWN ? 1 : 0;
+			
 			switch (evt.key.keysym.sym) {
 			case SDLK_1:
-				keys[1] = 1;
+				keys[1] = state;
 				break;
 			case SDLK_2:
-				keys[2] = 1;
+				keys[2] = state;
 				break;
 			case SDLK_3:
-				keys[3] = 1;
+				keys[3] = state;
 				break;
 			case SDLK_4:
-				keys[12] = 1;
+				keys[12] = state;
 				break;
 			case SDLK_q:
-				keys[4] = 1;
+				keys[4] = state;
 				break;
 			case SDLK_w:
-				keys[5] = 1;
+				keys[5] = state;
 				break;
 			case SDLK_e:
-				keys[6] = 1;
+				keys[6] = state;
 				break;
 			case SDLK_r:
-				keys[13] = 1;
+				keys[13] = state;
 				break;
 			case SDLK_a:
-				keys[7] = 1;
+				keys[7] = state;
 				break;
 			case SDLK_s:
-				keys[8] = 1;
+				keys[8] = state;
 				break;
 			case SDLK_d:
-				keys[9] = 1;
+				keys[9] = state;
 				break;
 			case SDLK_f:
-				keys[14] = 1;
+				keys[14] = state;
 				break;
 			case SDLK_z:
-				keys[10] = 1;
+				keys[10] = state;
 				break;
 			case SDLK_x:
-				keys[0] = 1;
+				keys[0] = state;
 				break;
 			case SDLK_c:
-				keys[11] = 1;
+				keys[11] = state;
 				break;
 			case SDLK_v:
-				keys[15] = 1;
-				break;
-			default:
-				break;
-			}
-		}
-		else if (evt.type == SDL_KEYUP) {
-			switch (evt.key.keysym.sym) {
-			case SDLK_1:
-				keys[1] = 0;
-				break;
-			case SDLK_2:
-				keys[2] = 0;
-				break;
-			case SDLK_3:
-				keys[3] = 0;
-				break;
-			case SDLK_4:
-				keys[12] = 0;
-				break;
-			case SDLK_q:
-				keys[4] = 0;
-				break;
-			case SDLK_w:
-				keys[5] = 0;
-				break;
-			case SDLK_e:
-				keys[6] = 0;
-				break;
-			case SDLK_r:
-				keys[13] = 0;
-				break;
-			case SDLK_a:
-				keys[7] = 0;
-				break;
-			case SDLK_s:
-				keys[8] = 0;
-				break;
-			case SDLK_d:
-				keys[9] = 0;
-				break;
-			case SDLK_f:
-				keys[14] = 0;
-				break;
-			case SDLK_z:
-				keys[10] = 0;
-				break;
-			case SDLK_x:
-				keys[0] = 0;
-				break;
-			case SDLK_c:
-				keys[11] = 0;
-				break;
-			case SDLK_v:
-				keys[15] = 0;
+				keys[15] = state;
 				break;
 			default:
 				break;
