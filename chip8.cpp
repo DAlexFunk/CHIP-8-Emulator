@@ -22,20 +22,6 @@ unsigned char font[80] = {
 };
 
 chip8::chip8() {
-	// Nothing
-}
-
-chip8::~chip8() {
-	// Nothing
-}
-
-/*
- * Function init()
- * Takes no parameters
- * Returns no value
- * Sets all member vars to default states
- */
-void chip8::initChip() {
     // Reset Vars
     PC = 0x200;
     I = 0;
@@ -71,6 +57,10 @@ void chip8::initChip() {
     }
 }
 
+chip8::~chip8() {
+	// Nothing
+}
+
 /*
  * Function loadFile()
  * Takes file path in as a variable
@@ -85,17 +75,16 @@ bool chip8::loadFile(std::string path) {
         return false;
     }
 
-    int i{ 512 };
-    unsigned char curr{ 0 };
-    while (file >> curr) {
-        if (i > 4095) {
-            std::cout << path << " is too large\n";
-            return false;
-        }
-
-        mem[i] = curr;
-        i++;
+    file.seekg(0, std::ios::end);
+    std::streamsize size{ file.tellg() };
+    if (size > 4096 - 512) {
+        std::cout << path << " is too large\n";
+        return false;
     }
+
+    file.seekg(0, std::ios::beg);
+    file.read(reinterpret_cast<char*>(&mem[0x200]), size);
+
     return true;
 }
 
