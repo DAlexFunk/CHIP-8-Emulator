@@ -1,6 +1,14 @@
 #pragma once
-#include <SDL.h>
-#include <SDL_mixer.h>
+#include <memory>
+#include "SDL.h"
+#include "SDL_mixer.h"
+
+// Deleter to cleanup SDL objects
+struct SDLDeleter {
+	void operator()(SDL_Window* window) const { if (window) SDL_DestroyWindow(window); }
+	void operator()(SDL_Renderer* renderer) const { if (renderer) SDL_DestroyRenderer(renderer); }
+	void operator()(Mix_Chunk* chunk) const { if (chunk) Mix_FreeChunk(chunk); }
+};
 
 class interface {
 public:
@@ -15,7 +23,7 @@ public:
 	static const int SCREEN_HEIGHT = 640;
 
 private:
-	SDL_Window* window = nullptr;
-	SDL_Renderer* renderer = nullptr;
-	Mix_Chunk* beep = nullptr;
+	std::unique_ptr<SDL_Window, SDLDeleter> window;
+	std::unique_ptr<SDL_Renderer, SDLDeleter> renderer;
+	std::unique_ptr<Mix_Chunk, SDLDeleter> beep;
 };

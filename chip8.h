@@ -30,5 +30,4 @@ private:
 
 	unsigned char delayTimer{ 0 }; // Delay timer used for game events
 	unsigned char soundTimer{ 0 }; // Sound timer that plays a sound at 0
-
 };
