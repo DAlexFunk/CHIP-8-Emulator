@@ -12,11 +12,11 @@ public:
 	bool drawFlag;
 	bool soundFlag;
 
-	void initChip();
 	bool loadFile(std::string file);
 	void runCycle();
 
 	unsigned char key[16]{ 0 };	   // Stores the current key state
+	unsigned char screen[RES_H][RES_W]{ 0 }; // The screen where a 1 is white and a 0 is black
 private:
 	unsigned short PC{ 0 };		   // Program Counter
 	unsigned short I{ 0 };		   // Address Register
@@ -31,5 +31,4 @@ private:
 	unsigned char delayTimer{ 0 }; // Delay timer used for game events
 	unsigned char soundTimer{ 0 }; // Sound timer that plays a sound at 0
 
-	unsigned char screen[RES_H][RES_W]{ 0 }; // The screen where a 1 is white and a 0 is black
 };

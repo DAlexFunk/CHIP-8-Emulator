@@ -22,20 +22,6 @@ unsigned char font[80] = {
 };
 
 chip8::chip8() {
-	// Nothing
-}
-
-chip8::~chip8() {
-	// Nothing
-}
-
-/*
- * Function init()
- * Takes no parameters
- * Returns no value
- * Sets all member vars to default states
- */
-void chip8::initChip() {
     // Reset Vars
     PC = 0x200;
     I = 0;
@@ -69,6 +55,10 @@ void chip8::initChip() {
     for (int i = 0; i < 80; i++) {
         mem[i] = font[i];
     }
+}
+
+chip8::~chip8() {
+	// Nothing
 }
 
 /*
