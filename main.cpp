@@ -1,13 +1,14 @@
 #include <iostream>
 #include "chip8.h"
 #include "interface.h"
+#include "constants.h"
 
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
 		std::cout << "Must pass in the rom as an argument\n";
 		return 1;
 	}
-	
+
 	chip8 chip;
 	interface interface;
 
@@ -18,6 +19,7 @@ int main(int argc, char* argv[]) {
 	bool isRunning = true;
 	while (isRunning) {
 		isRunning = interface.handleKeys(chip.key);
+		interface.updateScreen(chip.screen);
 	}
 	
 	return 0;

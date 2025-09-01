@@ -117,7 +117,23 @@ bool interface::handleKeys(unsigned char keys[constants::NUM_KEYS]) {
 }
 
 void interface::updateScreen(unsigned char screen[constants::RES_H][constants::RES_W]) {
-	// Nothing for now
+	SDL_SetRenderDrawColor(renderer.get(), 0x00, 0xFF, 0x00, 0xFF);
+	SDL_RenderClear(renderer.get());
+
+	int cellWidth = constants::SCREEN_WIDTH / constants::RES_W;
+	int cellheight = constants::SCREEN_HEIGHT / constants::RES_H;
+
+	for (int x = 0; x < constants::RES_W; x++) {
+		for (int y = 0; y < constants::RES_H; y++) {
+			int color = screen[y][x] == 1 ? 1 : 0; // Checks for uninitilized values (should not happen but who knows)
+
+			SDL_Rect currCell{ x * cellWidth, y * cellheight, cellWidth, cellheight };
+			SDL_SetRenderDrawColor(renderer.get(), color * 0xFF, color * 0xFF, color * 0xFF, 0xFF);
+			SDL_RenderFillRect(renderer.get(), &currCell);
+		}
+	}
+
+	SDL_RenderPresent(renderer.get());
 }
 
 /*
