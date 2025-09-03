@@ -29,6 +29,7 @@ interface::interface() {
 	if (beep == NULL) {
 		std::cout << "Could not load beep: " << Mix_GetError() << std::endl;
 	}
+	Mix_Volume(-1, 30);
 }
 
 interface::~interface() {
