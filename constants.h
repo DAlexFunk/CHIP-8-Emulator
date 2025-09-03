@@ -8,4 +8,6 @@ namespace constants {
 	constexpr int NUM_KEYS{ 16 };		// Number of keys on the keyboard
 	constexpr int MEM_LOCATIONS{ 4069 };// Number of memory locations
 	constexpr int START_ADR{ 512 };		// The starting address for ROMs
+
+	constexpr int CYCLES_PER_FRAME{ 12 };
 }
