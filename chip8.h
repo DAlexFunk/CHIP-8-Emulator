@@ -2,6 +2,24 @@
 #include <string>
 #include "constants.h"
 
+#define OPCODE_FNS \
+	X(x0) \
+	X(x1) \
+	X(x2) \
+	X(x3) \
+	X(x4) \
+	X(x5) \
+	X(x6) \
+	X(x7) \
+	X(x8) \
+	X(x9) \
+	X(xA) \
+	X(xB) \
+	X(xC) \
+	X(xD) \
+	X(xE) \
+	X(xF) \
+
 class chip8 {
 public:
 	chip8();
@@ -18,6 +36,13 @@ public:
 	
 	unsigned char delayTimer{ 0 }; // Delay timer used for game events
 	unsigned char soundTimer{ 0 }; // Sound timer that plays a sound at 0
+
+	enum { // enum to get the ids of opcode functions and the number of opcode functions
+		#define X(opName) opName##_id,
+			OPCODE_FNS
+		#undef X
+		numOpFns
+	};
 private:
 	unsigned short PC{ 0 };		   // Program Counter
 	unsigned short I{ 0 };		   // Address Register
@@ -32,5 +57,11 @@ private:
 	long long int prevTime{ getTime() };   // Time of the last cycle in ms since epoch
 	int timerAccumlator{ 0 };			   // Tracks how much time has happened since the last timer step. timers step after this reaches 1/60th of a second
 
-	long long int getTime();
+	long long int getTime();			   // Gets the current time
+
+	static void (chip8::* opcodeTable[numOpFns])(unsigned short);  // Array of opcode functions
+
+	#define X(name) void name##(unsigned short);		   // initilize opcode functions
+		OPCODE_FNS
+	#undef X
 };
