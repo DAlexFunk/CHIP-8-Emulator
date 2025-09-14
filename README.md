@@ -8,11 +8,13 @@ This project is developed completly in C++ and makes use of the SDL2.0 library f
 
 This project aims to emulate the CPU cycle of the original CHIP-8 systems. The steps to emulate these are Fetch (get an opcode from memory), decode (figure out which opcode it is), and execute (run that opcode properly)
 
+Later in the process the decode step was changed from using a giant switch statement to [function pointers](https://www.geeksforgeeks.org/cpp/function-pointer-in-cpp/) and [X macros](https://en.wikipedia.org/wiki/X_macro). This was mainly used to optimize the code not just for speed, but also readibility and expandibility. X macros make expanding the number of opcodes very simple by letting the programmer change the code in just one spot instead of many when adding a new opcode. This style is also commonly used on more advanced emulators.
+
 Features:
 * Support for base CHIP-8 roms
 * Video output in black and white
 * Audio output
-* Keyboard input using the following QWERTY  to Hex mapping:<br>![Keyboard mapping from QWERTY to Hex](./docs/keymappings.png)
+* Keyboard input using the following QWERTY to Hex mapping:<br>![Keyboard mapping from QWERTY to Hex](./docs/keymappings.png)
 
 ## How To Use
 1. Download the current release [here](https://github.com/DAlexFunk/CHIP-8-Emulator/releases)
