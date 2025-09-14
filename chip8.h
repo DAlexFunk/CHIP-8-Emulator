@@ -32,5 +32,5 @@ private:
 	long long int prevTime{ getTime() };   // Time of the last cycle in ms since epoch
 	int timerAccumlator{ 0 };			   // Tracks how much time has happened since the last timer step. timers step after this reaches 1/60th of a second
 
-	long long int getTime();
+	long long int getTime();			   // Gets the current time
 };
